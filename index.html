@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Still Practised — A Field Guide to Europe's Living Heritage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=Karla:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10201d;
+  --deep:#0b1614;
+  --paper:#f0efe7;
+  --paper-2:#e4e3d8;
+  --rule:rgba(16,32,29,0.16);
+  --rule-soft:rgba(16,32,29,0.08);
+  --text:#1b2a27;
+  --text-dim:#4e5f5a;
+  --safe:#4f7a5c;
+  --urgent:#b4702a;
+  --sea:#dcdccf;
+  --pin:#1b4d3e;
+  --hl:#f6e9c9;
+  --card:#e9e8de;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --paper:#0e1614;
+    --paper-2:#131d1a;
+    --text:#dfe3dc;
+    --text-dim:#97a49e;
+    --rule:rgba(223,227,220,0.18);
+    --rule-soft:rgba(223,227,220,0.09);
+    --sea:#182220;
+    --pin:#8fc0a9;
+    --safe:#8fc0a9;
+    --urgent:#d9a15c;
+    --hl:#26312a;
+    --card:#141e1b;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0e1614; --paper-2:#131d1a; --text:#dfe3dc; --text-dim:#97a49e;
+  --rule:rgba(223,227,220,0.18); --rule-soft:rgba(223,227,220,0.09);
+  --sea:#182220; --pin:#8fc0a9; --safe:#8fc0a9; --urgent:#d9a15c; --hl:#26312a; --card:#141e1b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--text);
+  font-family:'Karla',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-weight:400;
+  font-size:17px;
+  line-height:1.62;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+
+/* ---------- hero ---------- */
+header.hero{
+  padding:74px 0 38px;
+  border-bottom:1px solid var(--rule);
+}
+.kicker{
+  font-family:'Karla',sans-serif;
+  font-size:14px;
+  letter-spacing:0.02em;
+  color:var(--text-dim);
+  margin-bottom:22px;
+}
+h1{
+  font-family:'Fraunces',Georgia,serif;
+  font-optical-sizing:auto;
+  font-weight:500;
+  font-size:clamp(40px,8.5vw,74px);
+  line-height:0.98;
+  letter-spacing:-0.02em;
+  margin-bottom:8px;
+}
+h1 em{font-style:italic;font-weight:300}
+.sub{
+  font-family:'Fraunces',Georgia,serif;
+  font-weight:300;
+  font-size:clamp(19px,3.4vw,24px);
+  line-height:1.4;
+  color:var(--text-dim);
+  max-width:34em;
+  margin-top:18px;
+}
+.hero p.lede{margin-top:26px;max-width:36em}
+
+/* ---------- generic ---------- */
+section{padding:52px 0}
+h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-weight:500;
+  font-size:clamp(26px,5vw,36px);
+  line-height:1.1;
+  letter-spacing:-0.015em;
+  margin-bottom:18px;
+}
+h3{
+  font-family:'Fraunces',Georgia,serif;
+  font-weight:500;
+  font-size:22px;
+  line-height:1.2;
+  margin-bottom:10px;
+}
+p+p{margin-top:14px}
+.dim{color:var(--text-dim)}
+.small{font-size:15px;line-height:1.55}
+
+/* ---------- map ---------- */
+.mapbox{
+  background:var(--paper-2);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:34px 0 40px;
+}
+svg.locator{width:100%;height:auto;display:block;touch-action:manipulation}
+.maplabel{font-family:'Karla',sans-serif;font-size:15px;fill:var(--text);font-weight:600}
+.mapref{font-family:'Karla',sans-serif;font-size:13px;fill:var(--text-dim)}
+.grat{stroke:var(--rule-soft);stroke-width:1}
+.pin{fill:var(--pin)}
+.pin-urgent{fill:var(--urgent)}
+.ring{fill:none;stroke:var(--pin);stroke-width:1.4;opacity:0.35}
+.maplegend{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:14px;color:var(--text-dim)}
+.swatch{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:baseline}
+
+/* ---------- entries ---------- */
+.entry{
+  border-top:1px solid var(--rule);
+  padding:36px 0 30px;
+}
+.entry:first-of-type{border-top:none}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px 16px;
+  font-size:14px;color:var(--text-dim);
+  margin-bottom:12px;
+}
+.meta b{font-weight:600;color:var(--text)}
+.flag{
+  display:inline-block;
+  padding:1px 9px 2px;
+  border:1px solid var(--rule);
+  border-radius:999px;
+  font-size:13px;
+}
+.flag.urgent{border-color:var(--urgent);color:var(--urgent)}
+.entry h3 span.no{
+  font-family:'Karla',sans-serif;
+  font-weight:600;
+  font-size:15px;
+  color:var(--text-dim);
+  margin-right:10px;
+  vertical-align:2px;
+}
+.why{
+  border-left:2px solid var(--rule);
+  padding-left:16px;
+  margin:18px 0;
+  font-family:'Fraunces',Georgia,serif;
+  font-weight:300;
+  font-size:19px;
+  line-height:1.45;
+}
+.places{list-style:none;margin:18px 0 0}
+.places li{
+  padding:12px 0;
+  border-top:1px solid var(--rule-soft);
+}
+.places li:first-child{border-top:1px solid var(--rule-soft)}
+.places b{font-weight:600}
+.getin{
+  background:var(--card);
+  padding:16px 18px;
+  margin-top:18px;
+  font-size:15.5px;
+  line-height:1.55;
+}
+.getin b{font-weight:600}
+.getin p+p{margin-top:9px}
+
+/* ---------- aside boxes ---------- */
+.note{
+  border:1px solid var(--rule);
+  padding:22px 22px 24px;
+  margin:28px 0;
+}
+.note h3{font-size:20px}
+
+/* ---------- calendar ---------- */
+table{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+th,td{text-align:left;padding:9px 10px 9px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+th{font-weight:600;color:var(--text-dim);font-size:13.5px}
+td.when{white-space:nowrap;width:33%;font-weight:600}
+
+/* ---------- nav chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.chips a{
+  text-decoration:none;
+  font-size:14px;
+  padding:5px 12px 6px;
+  border:1px solid var(--rule);
+  border-radius:999px;
+  color:var(--text-dim);
+}
+.chips a:hover,.chips a:focus-visible{color:var(--text);border-color:var(--text)}
+a:focus-visible{outline:2px solid var(--pin);outline-offset:3px}
+
+footer{
+  border-top:1px solid var(--rule);
+  padding:36px 0 70px;
+  font-size:14.5px;
+  color:var(--text-dim);
+}
+footer a{text-underline-offset:3px}
+@media(max-width:600px){
+  body{font-size:16.5px}
+  section{padding:40px 0}
+  .maplabel{font-size:20px}
+  .mapref{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">A field guide to the UNESCO intangible cultural heritage lists</div>
+    <h1>Still<br><em>practised</em></h1>
+    <div class="sub">Sixteen European traditions that are not monuments, not museums, and not finished. Where to find them, what they mean to the people who keep them, and how to get past the rope line.</div>
+    <p class="lede">The World Heritage list protects places. A second, younger list protects practices — a whistled language, a weekly farmers' court, a way of heating a room with smoke. These can't be visited the way a cathedral can. They happen on particular days, in particular villages, usually in a language you don't speak, and often with nobody selling tickets. That's the point, and it's also the planning problem this guide is built to solve.</p>
+    <div class="chips">
+      <a href="#map">The map</a>
+      <a href="#howitworks">How the list works</a>
+      <a href="#entries">The sixteen</a>
+      <a href="#calendar">When to go</a>
+      <a href="#politics">The politics</a>
+      <a href="#verify">Checking a claim</a>
+    </div>
+  </div>
+</header>
+
+<div class="mapbox" id="map">
+  <div class="wrap">
+    <svg class="locator" viewBox="0 0 1000 830" role="img" aria-label="Locator map of sixteen intangible heritage traditions across Europe, plotted by latitude and longitude with reference cities for orientation.">
+      <rect x="0" y="0" width="1000" height="830" fill="var(--sea)"/>
+      <!-- graticule: 10 degree lon lines, 5 degree lat lines -->
+      <g class="grat">
+        <line x1="36.4" y1="0" x2="36.4" y2="830"/>
+        <line x1="218.2" y1="0" x2="218.2" y2="830"/>
+        <line x1="400" y1="0" x2="400" y2="830"/>
+        <line x1="581.8" y1="0" x2="581.8" y2="830"/>
+        <line x1="763.6" y1="0" x2="763.6" y2="830"/>
+        <line x1="945.4" y1="0" x2="945.4" y2="830"/>
+        <line x1="0" y1="66.6" x2="1000" y2="66.6"/>
+        <line x1="0" y1="177.6" x2="1000" y2="177.6"/>
+        <line x1="0" y1="288.6" x2="1000" y2="288.6"/>
+        <line x1="0" y1="399.6" x2="1000" y2="399.6"/>
+        <line x1="0" y1="510.6" x2="1000" y2="510.6"/>
+        <line x1="0" y1="621.6" x2="1000" y2="621.6"/>
+        <line x1="0" y1="732.6" x2="1000" y2="732.6"/>
+      </g>
+
+      <!-- reference cities -->
+      <g class="mapref">
+        <circle cx="361" cy="256" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="369" y="260">London</text>
+        <circle cx="406" cy="314" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="414" y="318">Paris</text>
+        <circle cx="608" cy="233" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="616" y="237">Berlin</text>
+        <circle cx="591" cy="469" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="599" y="473">Rome</text>
+        <circle cx="296" cy="502" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="240" y="519">Madrid</text>
+        <circle cx="746" cy="240" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="754" y="244">Warsaw</text>
+        <circle cx="693" cy="82" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="701" y="86">Stockholm</text>
+        <circle cx="891" cy="489" r="3" fill="var(--text-dim)" opacity="0.5"/><text x="820" y="506">Istanbul</text>
+      </g>
+
+      <!-- pins -->
+      <g>
+        <circle class="ring" cx="412" cy="264" r="13"/><circle class="pin" cx="412" cy="264" r="5.5"/><text class="maplabel" x="424" y="260">1 Oostduinkerke</text>
+        <circle class="ring" cx="443" cy="278" r="13"/><circle class="pin" cx="443" cy="278" r="5.5"/><text class="maplabel" x="455" y="292">2 Belgian beer</text>
+        <circle class="ring" cx="357" cy="522" r="13"/><circle class="pin" cx="357" cy="522" r="5.5"/><text class="maplabel" x="230" y="545">3 Valencia tribunal</text>
+        <circle class="ring" cx="378" cy="492" r="13"/><circle class="pin" cx="378" cy="492" r="5.5"/><text class="maplabel" x="390" y="488">4 Bell ringers</text>
+        <circle class="ring" cx="387" cy="466" r="13"/><circle class="pin" cx="387" cy="466" r="5.5"/><text class="maplabel" x="399" y="462">5 Castells</text>
+        <circle class="ring" cx="51" cy="775" r="13"/><circle class="pin" cx="51" cy="775" r="5.5"/><text class="maplabel" x="63" y="779">6 Silbo Gomero</text>
+        <circle class="ring" cx="255" cy="569" r="13"/><circle class="pin" cx="255" cy="569" r="5.5"/><text class="maplabel" x="267" y="586">7 Flamenco</text>
+        <circle class="ring" cx="197" cy="539" r="13"/><circle class="pin" cx="197" cy="539" r="5.5"/><text class="maplabel" x="80" y="535">8 Fado</text>
+        <circle class="ring" cx="546" cy="397" r="13"/><circle class="pin" cx="546" cy="397" r="5.5"/><text class="maplabel" x="558" y="393">9 Cremona violins</text>
+        <circle class="ring" cx="623" cy="492" r="13"/><circle class="pin" cx="623" cy="492" r="5.5"/><text class="maplabel" x="635" y="496">10 Naples pizza</text>
+        <circle class="ring" cx="509" cy="364" r="13"/><circle class="pin" cx="509" cy="364" r="5.5"/><text class="maplabel" x="400" y="352">11 Alpine season</text>
+        <circle class="ring" cx="703" cy="378" r="13"/><circle class="pin" cx="703" cy="378" r="5.5"/><text class="maplabel" x="715" y="382">12 Mohács busós</text>
+        <circle class="ring" cx="855" cy="118" r="13"/><circle class="pin" cx="855" cy="118" r="5.5"/><text class="maplabel" x="867" y="114">13 Smoke sauna</text>
+        <circle class="ring" cx="816" cy="63" r="13"/><circle class="pin" cx="816" cy="63" r="5.5"/><text class="maplabel" x="660" y="48">14 Finnish sauna</text>
+        <circle class="ring" cx="802" cy="134" r="13"/><circle class="pin" cx="802" cy="134" r="5.5"/><text class="maplabel" x="640" y="152">15 Song festivals</text>
+        <circle class="ring" cx="918" cy="278" r="13" style="stroke:var(--urgent)"/><circle class="pin-urgent" cx="918" cy="278" r="5.5"/><text class="maplabel" x="800" y="296" style="fill:var(--urgent)">16 Borscht</text>
+      </g>
+    </svg>
+    <div class="maplegend">
+      <span><span class="swatch" style="background:var(--pin)"></span>Representative List</span>
+      <span><span class="swatch" style="background:var(--urgent)"></span>In need of urgent safeguarding</span>
+      <span>Positions are true to latitude and longitude; coastlines are omitted deliberately, since most of these traditions belong to a valley or a parish rather than a country.</span>
+    </div>
+  </div>
+</div>
+
+<section id="howitworks">
+  <div class="wrap">
+    <h2>What the list actually is</h2>
+    <p>UNESCO runs two separate systems that people constantly conflate. World Heritage, created in 1972, protects physical places. The Convention for the Safeguarding of the Intangible Cultural Heritage, adopted in 2003, protects living practice — skills, rituals, oral traditions, festive events, craftsmanship. There is no site to visit and no plaque to photograph. There is only whether people are still doing it.</p>
+    <p>Three registers sit under the 2003 convention. The <b>Representative List</b> is the large one, for practices that illustrate the diversity of living heritage; most entries in this guide are on it. The <b>List in Need of Urgent Safeguarding</b> is for practices whose survival is genuinely at risk, and inscription there triggers a safeguarding plan rather than a marketing campaign. A third <b>Register of Good Safeguarding Practices</b> collects methods that worked, and is where you look if you want to understand how a tradition gets rescued rather than just where to watch one.</p>
+    <p>Inscription confers no ownership and no exclusivity. Two countries can hold overlapping traditions; several elements here are multinational. It also confers no funding guarantee, no legal protection in the trademark sense, and — as the Belgian entries below show — no permanence.</p>
+
+    <div class="note">
+      <h3>The mistake nearly every travel article makes</h3>
+      <p class="small">Viennese coffee house culture is routinely described as UNESCO intangible heritage. It was added in 2011 to <b>Austria's national inventory</b> of intangible cultural heritage, which is a domestic register maintained under the convention — not the international Representative List. The distinction matters if you're writing about it, and the same confusion attaches to dozens of regional traditions whose tourist boards have quietly dropped the word "national". The coffee houses are still wonderful. They are simply not on the list people think they're on.</p>
+    </div>
+  </div>
+</section>
+
+<section id="entries">
+  <div class="wrap">
+    <h2>The sixteen</h2>
+    <p class="dim small">Ordered roughly west to east. Each entry gives the inscription year and register, what the practice means locally, two or three places to encounter it, and what participation actually looks like.</p>
+
+    <!-- 1 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Belgium</span> <span>Inscribed <b>2013</b></span> <span>Representative List</span></div>
+      <h3><span class="no">1</span>Shrimp fishing on horseback, Oostduinkerke</h3>
+      <p>Draft horses walk chest-deep through the North Sea surf, dragging funnel nets held open by wooden boards while a chain scrapes the sand and startles grey shrimp into jumping. Oostduinkerke is the only place on earth where this is still done. <a href="https://ich.unesco.org/en/RL/shrimp-fishing-on-horseback-in-oostduinkerke-00673">Twelve households carry the tradition, each with its own speciality — net-weaving, or deep knowledge of Brabant draft horses</a>, and the fishers work by reading tides, currents and the temperament of a one-tonne animal in moving water.</p>
+      <p class="why">The practice survived because the town deliberately turned it into a spectacle. The Shrimp Festival was created in the 1950s specifically to save a craft that was dying; the demonstrations are now subsidised by the municipality. It is one of the clearest examples in Europe of tourism keeping a tradition alive rather than hollowing it out.</p>
+      <ul class="places">
+        <li><b>The beach at Oostduinkerke</b> — Demonstrations run roughly 40 times a year, mostly April to September, timed to low tide and lasting about 45 minutes. Dates are published by Koksijde municipality; they shift constantly, because the sea decides.</li>
+        <li><b>NAVIGO National Fisheries Museum</b>, in the town — the institution formally charged with safeguarding the practice. Go here first if you want the context before the spectacle.</li>
+        <li><b>The Shrimp Festival</b>, final weekend of June — parade floats, street theatre, and a children's contest that inducts the next generation. <a href="https://ich.unesco.org/en/RL/shrimp-fishing-on-horseback-in-oostduinkerke-00673">Draws over 10,000 people.</a></li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> the fishers give demonstrations and talk to visitors and school groups as a matter of routine, and NAVIGO takes bookings for private sessions with a shrimper. Nobody is going to put you on a horse, but you can watch the catch get cooked on the sand afterwards and eat it there.</p>
+        <p><b>Getting there:</b> Belgian coast tram from De Panne or Ostend, then a short walk. No car needed; this is one of the most transit-accessible entries in the guide.</p>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Belgium</span> <span>Inscribed <b>2016</b></span> <span>Representative List</span></div>
+      <h3><span class="no">2</span>Beer culture in Belgium</h3>
+      <p>Not the beer — the culture around it. <a href="https://ich.unesco.org/en/Decisions/11.COM/10.b.5">Almost 1,500 types are produced using different fermentation methods, regions are known for particular varieties, some Trappist communities brew with profits going to charity, and beer is woven into cooking, from beer-washed cheese to food pairing.</a> The nomination came from the German-speaking Community on behalf of all three of Belgium's language communities, which tells you something about what beer does in a country with three of them.</p>
+      <p class="why">This is the entry that generated the most eye-rolling on inscription, and it's the one worth thinking hardest about. What was recognised is a social infrastructure — the café as a civic room, the parish brewery, the glass specific to the beer — in a country where that infrastructure is under the same commercial pressure as everywhere else.</p>
+      <ul class="places">
+        <li><b>The Pajottenland and Zenne valley, west of Brussels</b> — lambic country, where beer is still fermented by ambient wild yeast. The traditional brewers and blenders here are the least reproducible part of the whole tradition.</li>
+        <li><b>Bruges and Brussels café culture</b> — the everyday form. A brown café with a 200-strong list and a waiter who corrects your glass choice is the practice, not the sideshow.</li>
+        <li><b>A Trappist abbey brewery</b> — most do not admit visitors to the brewhouse. The abbey café adjacent is usually the closest you get, which is itself the tradition working as intended.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> lambic blenders and small breweries run tours and, in several cases, blending or brewing days. Autumn through spring is the traditional lambic brewing season, since spontaneous fermentation depends on cool air.</p>
+        <p><b>Getting there:</b> the Pajottenland is reachable by local train and bus from Brussels within an hour.</p>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Spain</span> <span>Inscribed <b>2009</b></span> <span>Representative List</span></div>
+      <h3><span class="no">3</span>The irrigators' tribunals: Valencia and Murcia</h3>
+      <p>Eight elected farmers in black smocks sit in a semicircle of 17th-century chairs outside a cathedral door and settle disputes about water. No lawyers, no documents, no written record, and no appeal. <a href="https://www.visitvalencia.com/en/events-valencia/tribunal-waters-unesco-heritage-live-every-thursday">The Tribunal de les Aigües meets every Thursday at noon under the Door of the Apostles at Valencia Cathedral, conducts business in Valencian, and issues verdicts that cannot be appealed.</a> <a href="https://connectingvalencia.com/valencia/unesco/">It was inscribed in 2009 together with the Council of Wise Men of the plain of Murcia; both bodies trace to al-Andalus, elect their own members, and operate orally under Spanish law.</a></p>
+      <p class="why">This is the most remarkable thing on the list and the least understood. It is not a reenactment. It is a functioning court, older than the Spanish state, whose jurisdiction survived every regime change since the 13th century because the irrigation channels it governs never stopped needing to be shared. If you care about how institutions actually persist, this is a twenty-minute education.</p>
+      <ul class="places">
+        <li><b>Plaça de la Mare de Déu, Valencia</b> — Thursdays at 12:00 sharp. If the Thursday is a public holiday, the session moves to the Wednesday. Free, no ticket.</li>
+        <li><b>The huerta itself</b> — the irrigated plain north and south of the city, still laced with the acequias under dispute. Cycling it explains the court better than watching the court does.</li>
+        <li><b>Murcia</b> — the Consejo de Hombres Buenos meets on Thursdays too, and gets a fraction of the audience.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> you don't, and that's the etiquette point. Regional tourism authorities are explicit that this is a real session, not a performance. Arrive by 11:45, stand at the back, stay silent. Often there are no cases at all and the court adjourns in four minutes.</p>
+        <p><b>Getting there:</b> Valencia metro lines 3, 5 and 9 to the old town, then walk.</p>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Spain</span> <span>Inscribed <b>2022</b></span> <span>Representative List</span></div>
+      <h3><span class="no">4</span>Manual bell ringing</h3>
+      <p>Bells rung by hand, by ringers who learned the local code: which pattern means a death, which means a fire, which means the procession is starting, which means the storm is coming. <a href="https://connectingvalencia.com/valencia/unesco/">Inscribed in 2022, it is treated by UNESCO as a form of communication embedded in community life rather than as music.</a></p>
+      <p class="why">Electrification killed hand ringing across most of Europe in the 20th century; motors are cheaper and don't need a rota of trained volunteers. What survives is a public messaging system that predates the telegraph, maintained by guilds who are now teaching teenagers a vocabulary their grandparents understood instinctively.</p>
+      <ul class="places">
+        <li><b>The Micalet, Valencia Cathedral</b> — one of the most active ringing guilds in Spain, and an easy pairing with the water tribunal in the same square.</li>
+        <li><b>Catalan and Aragonese parishes</b> — smaller guilds ring for local feast days, which is when the full repertoire comes out rather than a demonstration subset.</li>
+        <li><b>Albaida and the Valencian interior</b> — village towers where the rota is still a genuine parish duty.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> guilds actively recruit and run open training sessions, because the whole safeguarding problem is succession. Contacting a <i>colla de campaners</i> ahead of a feast day is realistic; walking in on the day is not.</p>
+        <p><b>Getting there:</b> Valencia is the practical base; the village towers need a car or a regional bus.</p>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Spain — Catalonia</span> <span>Inscribed <b>2010</b></span> <span>Representative List</span></div>
+      <h3><span class="no">5</span>Castells — human towers</h3>
+      <p>Teams build towers of people up to ten levels high, topped by a child who raises one hand and then has to get down. <a href="https://monocle.com/culture/catalan-castells-photography/">The tradition began in the 18th century in Valls, and each team has its own band; the tune "El Toc de Castells" guides the climbers, so the people crushed at the bottom of the pinya can track the tower's progress by ear alone.</a> <a href="https://castellscat.cat/en/els-castells">After the 2010 inscription the movement boomed, reaching about 100 active teams by 2019.</a></p>
+      <p class="why">Castells became one of the most potent symbols of Catalan identity in the second half of the 20th century, and the political charge is not incidental — the towers were a way of occupying public squares under a dictatorship that had banned much else. <a href="https://www.skipthelinebarcelona.com/the-castells-or-catalan-human-towers/">A colla is mixed by age and body type by necessity, from children to people in their sixties, and it rehearses weekly for months.</a></p>
+      <ul class="places">
+        <li><b>Valls</b> — the origin town. Santa Úrsula, in late October, is where the two Valls teams attempt their hardest structures.</li>
+        <li><b>Vilafranca del Penedès</b> — the festival at the end of August, and the strongest colla of the modern era.</li>
+        <li><b>Tarragona</b> — the biennial competition, held in a former bullring in front of tens of thousands, is the concentrated version if you only have one day.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> this is the rare entry where a visitor can genuinely participate. Colles welcome anyone into the pinya, the base ring that absorbs the weight and catches a collapse — no skill required, only nerve and a willingness to be squashed. Rehearsals are usually open, and most colles are relaxed about a visitor turning up if asked in advance.</p>
+        <p><b>Getting there:</b> Valls, Vilafranca and Tarragona are all on regional rail from Barcelona, 40 to 80 minutes.</p>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Spain — Canary Islands</span> <span>Inscribed <b>2009</b></span> <span>Representative List</span></div>
+      <h3><span class="no">6</span>Silbo Gomero, the whistled language of La Gomera</h3>
+      <p>A whistled form of Spanish, developed to carry across ravines too deep to shout over. <a href="https://ich.unesco.org/en/RL/whistled-language-of-the-island-of-la-gomera-canary-islands-the-silbo-gomero-00172">Two distinct whistles stand in for the five Spanish vowels and four more for consonants, distinguished by pitch and by whether the sound is continuous or interrupted; a practised whistler can say anything at all.</a> <a href="https://ich.unesco.org/en/RL/whistled-language-of-the-island-of-la-gomera-canary-islands-the-silbo-gomero-00172">It is the only whistled language in the world that is fully developed and used by a large community — more than 22,000 people — and it has been taught in the island's schools since 1999.</a></p>
+      <p class="why">The teaching mandate came from below. <a href="https://en.wikipedia.org/wiki/Silbo_Gomero">Elderly expert whistlers asked to teach it voluntarily at a dedicated centre, parent-teacher associations pushed it into every school, and the revitalisation was a grassroots measure before it was a government one.</a> A language that nearly died with the arrival of roads and telephones is now spoken by children who have never needed it to communicate — which raises the honest question of what exactly is being preserved, and is worth asking a silbador directly.</p>
+      <ul class="places">
+        <li><b>Island schools and the Aula Insular del Silbo Gomero</b> — the formal transmission point, taking students of all ages.</li>
+        <li><b>Garajonay National Park and the ravines above Agulo</b> — the terrain that produced the language. Guided walks in the north sometimes include a demonstration by a local instructor.</li>
+        <li><b>Mirador de Abrante and island restaurants</b> — the tourist-facing demonstration circuit. Honest about what it is, and still the easiest way to hear it.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> introductory sessions with a silbador exist through walking operators and cultural venues. Expect to be bad at it; the finger positions do most of the work.</p>
+        <p><b>Getting there:</b> ferry from southern Tenerife, about an hour. The island is small but the roads are serpentine — allow far longer than the distances suggest.</p>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Spain — Andalusia</span> <span>Inscribed <b>2010</b></span> <span>Representative List</span></div>
+      <h3><span class="no">7</span>Flamenco</h3>
+      <p>Song, guitar, dance and palmas, rooted in Andalusia and inseparable from Roma history in Spain. The inscription covers the whole complex rather than any one performance style, which matters because the tourist tablao and the family gathering are genuinely different things using the same vocabulary.</p>
+      <p class="why">Flamenco is the entry where the gap between the listed practice and the marketed product is widest. What UNESCO recognised is transmission within families and neighbourhoods — the peña, the fiesta, the informal night that starts at two in the morning. What most visitors buy is a 75-minute show with a drink included. Both exist; only one is the heritage.</p>
+      <ul class="places">
+        <li><b>Jerez de la Frontera</b> — the Santiago and San Miguel barrios, and the Festival de Jerez in February, which is where the form is worked on rather than displayed.</li>
+        <li><b>A peña flamenca</b>, in Jerez, Cádiz or Seville — member clubs that host nights open to visitors. Cheap, late, unpolished, and the closest thing to the listed practice.</li>
+        <li><b>Seville and Granada tablaos</b> — high technical standard, commercial framing. Fine, as long as you know which one you're at.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> palmas workshops are the underrated entry point — learning to clap the compás correctly teaches you more about the music in two hours than a month of watching. Dance and cante classes in Jerez and Seville take short-term students.</p>
+        <p><b>Getting there:</b> Jerez is 50 minutes by train from Seville, which is on the high-speed line from Madrid.</p>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Portugal</span> <span>Inscribed <b>2011</b></span> <span>Representative List</span></div>
+      <h3><span class="no">8</span>Fado</h3>
+      <p>Urban song from Lisbon, voice against Portuguese guitar and viola, sung in rooms small enough that the audience is asked to stop talking. The listing is specifically about the Lisbon tradition and its transmission through neighbourhood houses and family lineages.</p>
+      <p class="why">Fado carries an unusually complicated political memory. It was promoted and censored under the Estado Novo, then treated with suspicion after 1974 precisely because the regime had used it, and only fully rehabilitated decades later. Local pride in it is real but rarely uncomplicated, which is worth knowing before you call it the soul of Portugal at dinner.</p>
+      <ul class="places">
+        <li><b>Alfama and Mouraria</b> — the neighbourhoods that produced it. Mouraria is where the tradition is least tourist-shaped.</li>
+        <li><b>Fado vadio evenings</b> — amateur nights in small tascas where anyone from the room can sing and the guitarists accompany whoever stands up. This is the living transmission mechanism.</li>
+        <li><b>Museu do Fado</b> — archive, sound library, and a school. Useful for understanding lineage, which is how fado singers are actually placed by locals.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> at a vadio night you are formally permitted to sing. Most visitors shouldn't. Attending is participation enough, and the silence when a singer starts is part of the practice — phones down, conversation stopped, no photographs.</p>
+        <p><b>Getting there:</b> Lisbon metro to Martim Moniz or the 28 tram; both neighbourhoods are walkable from the centre.</p>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Italy</span> <span>Inscribed <b>2012</b></span> <span>Representative List</span></div>
+      <h3><span class="no">9</span>Violin craftsmanship in Cremona</h3>
+      <p><a href="https://ich.unesco.org/en/Decisions/7.COM/11.18">Makers train through a specialised school and a close teacher-pupil apprenticeship, then build three to six instruments a year, shaping and assembling more than 70 pieces of wood around an inner mould by hand, each piece chosen for its own acoustic response. No two are alike.</a> No industrial parts, no semi-finished components.</p>
+      <p class="why">Cremona is a small city whose economy, identity and street plan are organised around a single craft. <a href="https://publicatt.unicatt.it/handle/10807/313637">Workshops cluster in the historic centre in what researchers call the atelier effect</a>, and the density is the tradition: apprentices can see a dozen masters' methods within a few streets.</p>
+      <ul class="places">
+        <li><b>The workshops of the centro storico</b> — many open their doors, and watching someone thickness a plate by ear and thumb is the whole point.</li>
+        <li><b>Museo del Violino</b> — holds historic instruments and runs regular auditions where a player performs on a Stradivari or Amati in a purpose-built hall.</li>
+        <li><b>The Stradivari international triennial competition</b> — when the current generation's best work is judged in public.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> the international violin-making school takes long-term students, and shorter workshops exist for players who want to understand setup and adjustment. For a visitor, a booked workshop visit is straightforward and usually free.</p>
+        <p><b>Getting there:</b> about an hour by regional train from Milan.</p>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Italy</span> <span>Inscribed <b>2017</b></span> <span>Representative List</span></div>
+      <h3><span class="no">10</span>The art of the Neapolitan pizzaiuolo</h3>
+      <p>The listing is about the maker, not the dish. <a href="https://www.ansa.it/english/news/2017/12/07/art-of-neapolitan-pizza-wins-unesco-status-2_065791cc-e6fe-41b4-8d40-fc35f1c10ce9.html">Around 3,000 pizzaiuoli live and work in Naples, and knowledge passes primarily in the bottega, where apprentices watch a master work.</a> The gesture sequence — the dough handled in a particular order, the peel work at the oven mouth, the performance for the room — is what was inscribed.</p>
+      <p class="why">Two million Italians signed the petition supporting the nomination, which tells you this was as much a national campaign as a safeguarding measure. The useful thing for a visitor is that it reframes the pizzeria as a workshop with a viewing gallery: the oven is at the front, deliberately, and watching is expected.</p>
+      <ul class="places">
+        <li><b>The historic centre pizzerias</b> — the oldest houses on and around Via dei Tribunali, where the oven faces the street.</li>
+        <li><b>Neighbourhood pizzerie fritte</b> — fried pizza, the poorer and older sibling, still sold from windows in the Quartieri Spagnoli.</li>
+        <li><b>Associazione Verace Pizza Napoletana</b> — runs the certification school and, if you want the technical version, teaches it.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> short courses for non-professionals are widely available and genuinely hands-on; the certification track is for people going into the trade. Either way, ask to stand at the oven.</p>
+        <p><b>Getting there:</b> Naples metro line 1 to Dante or Museo; the centre is walkable.</p>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Switzerland</span> <span>Inscribed <b>2023</b></span> <span>Representative List</span></div>
+      <h3><span class="no">11</span>The alpine pasture season</h3>
+      <p>The summer movement of cattle to high pasture and back down again, along with the cheesemaking, the herding knowledge, the decorated descent and the calendar the whole valley organises itself around. <a href="https://creativesunite.eu/article/unesco-adds-56-new-practices-to-intangible-cultural-heritage-list">It was among the elements added in 2023, the year the list passed 694 entries.</a></p>
+      <p class="why">This is an economic system dressed as a festival. High pasture is only usable for a few months, cheese is how the summer's milk gets stored until winter, and the descent is the moment the accounts get settled. The flower crowns are real, but so is the ledger underneath.</p>
+      <ul class="places">
+        <li><b>The Alpabzug or Désalpe</b>, September into early October — the decorated herds coming down through villages in Appenzell, the Bernese Oberland and Fribourg. Dates are fixed locally and announced late, because they depend on the weather.</li>
+        <li><b>A working alp in July or August</b> — many take day visitors or overnight guests for the morning milking and cheesemaking, which is the substance rather than the parade.</li>
+        <li><b>Alp cheese dairies</b> — where the summer's output is sold directly, and where you can taste the difference a single pasture makes.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> some alps take seasonal helpers for a week or more through placement schemes — hard physical work, no pay beyond board, and the only way to see the whole cycle.</p>
+        <p><b>Getting there:</b> Swiss postbus networks reach almost every valley involved, which makes this unusually car-free for a mountain tradition.</p>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Hungary</span> <span>Inscribed <b>2009</b></span> <span>Representative List</span></div>
+      <h3><span class="no">12</span>Busó festivities at Mohács</h3>
+      <p><a href="https://ich.unesco.org/en/decisions/4.COM/13.42">A six-day carnival in late February marking the end of winter, named for the busós — figures in carved wooden masks and heavy woolly cloaks. More than 500 arrive by rowboat across the Danube and march through the town alongside horse-drawn and motorised fantasy vehicles, and a coffin representing winter is burned on a bonfire in the main square.</a></p>
+      <p class="why"><a href="https://ich.unesco.org/en/decisions/4.COM/13.42">The tradition began with the Croatian minority in Mohács and is now shared with their Hungarian, German, Serbian and Roma neighbours, who have carried it between them for generations.</a> In a region where minority identity has been a live political question for a century, a carnival that belongs to everyone in the town simultaneously is not a small thing.</p>
+      <ul class="places">
+        <li><b>Mohács, the six days before Ash Wednesday</b> — the Sunday crossing and the Tuesday bonfire are the two fixed points.</li>
+        <li><b>The mask carvers' workshops</b> — several work year-round and show the craft; a busó mask is made to a personal design, not a template.</li>
+        <li><b>Busóudvar</b> — the permanent exhibition in town, for the off-season.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> busó groups are self-organised and traditionally local, but the carnival is entirely street-level — there is no barrier and no stage. Buy a rattle, get in the way, expect to be flour-dusted.</p>
+        <p><b>Getting there:</b> train from Budapest to Pécs, then bus. Book beds months out; the town's capacity is small and the dates are fixed by Lent.</p>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Estonia</span> <span>Inscribed <b>2014</b></span> <span>Representative List</span></div>
+      <h3><span class="no">13</span>The smoke sauna of Võromaa</h3>
+      <p><a href="https://ich.unesco.org/en/RL/smoke-sauna-tradition-in-voromaa-00951">A sauna with no chimney, where smoke from the burning wood circulates through the room itself, and a set of practices that includes the bathing customs, the making of bath whisks, the building and repair of the sauna, and the smoking of meat inside it.</a> <a href="https://estonianworld.com/culture/unesco-adds-vorumaa-smoke-sauna-in-cultural-heritage-list/">The Võro community numbers around 75,000 in Estonia's south-east and keeps its own dialect alongside the practice.</a></p>
+      <p class="why"><a href="https://estonianworld.com/culture/unesco-adds-vorumaa-smoke-sauna-in-cultural-heritage-list/">A Võro sauna-keeper describes it as ritual cleansing of body and soul, with heating, whisk-making and sweat bathing as a natural part of rural family life.</a> It is also the clearest case in this guide of a community writing its own nomination: <a href="https://estonianworld.com/life/inside-a-voro-smoke-sauna-everything-has-a-practical-and-a-spiritual-purpose/">the file took the Veeroja family five years.</a></p>
+      <ul class="places">
+        <li><b>Mooska farm, Haanja</b> — the best-known working smoke sauna. <a href="https://visitestonia.com/en/sauna-session-in-a-traditional-old-voromaa-smoke-sauna-at-mooska">A full session runs at least three hours and the sauna holds about eight people</a>; <a href="https://visitestonia.com/en/tour-in-mooska-smokesauna-farm-introducing-the%C2%A0heritage-of-the-smoke-sauna-tradition-in-vorumaa%C2%A0with-the%C2%A0degustation-of%C2%A0traditionally%C2%A0smoked%C2%A0meat">a shorter tour by appointment visits three saunas and includes sauna-smoked meat.</a></li>
+        <li><b>Farm saunas across Vana-Võromaa</b> — dozens take guests, and the point of going to a smaller one is that you are in someone's family sauna rather than a facility.</li>
+        <li><b>Winter, with the pond</b> — the ice dip is not decoration; the cycle is the practice.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> this is full participation by design. You will be whisked with birch boughs, told what each stage is for, and fed. Book well ahead — capacity is tiny and demand rose sharply after international coverage.</p>
+        <p><b>Getting there:</b> train Tallinn to Tartu, about two hours, then roughly an hour by road south-east. A car helps here.</p>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Finland</span> <span>Inscribed <b>2020</b></span> <span>Representative List</span></div>
+      <h3><span class="no">14</span>Sauna culture in Finland</h3>
+      <p>The everyday version: roughly one sauna for every two people in the country, in flats, offices, ferries and lakeside cabins. <a href="https://mooska.eu/en/category/eng-en/">Finland's sauna culture was listed in 2020, six years after Estonia's smoke sauna — a detail that surprises people who assume Finland got there first.</a></p>
+      <p class="why">What distinguishes the Finnish listing is ordinariness. This is not a ceremony performed occasionally but a weekly civic habit, historically the room where people were born, washed the dead, cured meat and negotiated. The public saunas that nearly vanished in the 1980s are now the centre of a genuine revival.</p>
+      <ul class="places">
+        <li><b>Helsinki's public saunas</b> — the surviving old neighbourhood sauna in Kallio, and the new architectural ones on the waterfront. Going between the two in a day is a compressed social history.</li>
+        <li><b>A smoke sauna in the lake district</b> — Finland has its own savusauna tradition, and the eastern lakes are where to find it.</li>
+        <li><b>Tampere</b> — the city with the strongest claim to being the sauna capital, including the oldest continuously operating public sauna in the country.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> you simply go. The etiquette is minimal and mostly about not talking too much, letting people throw löyly when they want it, and washing before you enter. Mixed and single-sex hours vary by venue.</p>
+        <p><b>Getting there:</b> Helsinki's public saunas are on tram lines. Tampere is under two hours by train.</p>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="entry">
+      <div class="meta"><span class="flag">Estonia · Latvia · Lithuania</span> <span>Proclaimed <b>2003</b>, listed <b>2008</b></span> <span>Representative List</span></div>
+      <h3><span class="no">15</span>The Baltic song and dance celebrations</h3>
+      <p>Mass choral festivals held every few years in each of the three countries, with choirs numbering into the tens of thousands on a single stage and audiences in the hundreds of thousands. They rotate on separate national cycles, so in most years one of the three is happening.</p>
+      <p class="why">These festivals are the reason the phrase "Singing Revolution" exists. Through the late 1980s the song grounds became the only places where hundreds of thousands of people could legally assemble, and national songs banned from broadcast were sung there in unison. The independence movements grew directly out of that. No other entry on this list has a comparable claim to having changed a border.</p>
+      <ul class="places">
+        <li><b>Tallinn Song Festival Grounds</b> — the shell-shaped stage above the city, open and free to walk on any day of the year. Empty, it is one of the most affecting spaces in northern Europe.</li>
+        <li><b>Vingis Park, Vilnius and Mežaparks, Riga</b> — the Lithuanian and Latvian equivalents.</li>
+        <li><b>The festival itself</b> — check each country's cycle; tickets for the final concerts sell out, but the processions through the city beforehand are free and, for many locals, the better part.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> participation runs through choirs, and diaspora choirs do take part, so the route in is real but long. As a visitor, the procession is the accessible half.</p>
+        <p><b>Getting there:</b> all three song grounds are within city transit networks.</p>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="entry">
+      <div class="meta"><span class="flag urgent">Ukraine</span> <span>Inscribed <b>2022</b></span> <span class="flag urgent">Urgent Safeguarding</span></div>
+      <h3><span class="no">16</span>The culture of Ukrainian borscht cooking</h3>
+      <p><a href="https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852">Broth with beetroot, sugar beet or fermented beet juice, cooked in a large pot, served with bread or garlic buns, with the variety chosen according to the occasion; the practice passes down within families, children included.</a> <a href="https://www.unesco.org/en/articles/culture-ukrainian-borscht-cooking-inscribed-list-intangible-cultural-heritage-need-urgent">It entered Ukraine's national inventory in 2020 and was due for the Representative List in the 2023 cycle.</a></p>
+      <p class="why"><a href="https://www.unesco.org/en/articles/culture-ukrainian-borscht-cooking-inscribed-list-intangible-cultural-heritage-need-urgent">Ukraine asked the committee to fast-track the file as a case of extreme urgency because of the war, and the committee agreed</a> — <a href="https://www.npr.org/2022/07/01/1109319174/unesco-declares-ukraine-borsch-ukrainian-heritage">the first time it had ever inscribed an element on that basis.</a> <a href="https://www.unesco.org/en/articles/culture-ukrainian-borscht-cooking-inscribed-list-intangible-cultural-heritage-need-urgent">The committee's reasoning was displacement: people unable to grow the vegetables, cook the dish, or gather to do it together.</a> <a href="https://www.npr.org/2022/07/01/1109319174/unesco-declares-ukraine-borsch-ukrainian-heritage">UNESCO noted explicitly that inscription implies neither exclusivity nor ownership</a> — a caveat that did nothing to stop the row that followed, with <a href="https://www.euronews.com/culture/2022/07/04/unesco-adds-borsch-to-endangered-list-for-ukraine-but-is-everyone-happy">Ukraine's culture minister declaring victory in the war for borsch and Russia's foreign ministry spokeswoman responding in kind.</a></p>
+      <ul class="places">
+        <li><b>Western Ukraine</b> — Lviv and the surrounding region, where the practice continues and where visiting is currently possible for those who assess the risk as acceptable.</li>
+        <li><b>Ukrainian restaurants and cultural centres in host countries</b> — Warsaw, Kraków, Berlin, Prague and Vilnius all have substantial displaced communities cooking in public.</li>
+        <li><b>Borshchiv, Ternopil region</b> — the town that lends its name to the all-Ukrainian borscht festival, when conditions allow it to run.</li>
+      </ul>
+      <div class="getin">
+        <p><b>Getting involved:</b> the honest answer for most readers is: not by travelling. Cooking it, supporting displaced cooks, and buying from Ukrainian food businesses abroad is a real form of participation in a tradition whose stated threat is dispersal.</p>
+        <p><b>Travel note:</b> Ukraine is at war. Check your government's current advice before any plan, and treat all of the above as conditional.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="wrap">
+    <h2>When these actually happen</h2>
+    <p class="dim small">The single biggest planning error is treating these like attractions with opening hours. Roughly half are fixed to a date, a tide or a season.</p>
+    <table>
+      <thead><tr><th>Timing</th><th>Tradition</th></tr></thead>
+      <tbody>
+        <tr><td class="when">Weekly, fixed</td><td>Valencia water tribunal — Thursdays at noon, moved to Wednesday if the Thursday is a public holiday</td></tr>
+        <tr><td class="when">Late February</td><td>Busó festivities, Mohács — six days ending on Shrove Tuesday, so the dates move with Lent</td></tr>
+        <tr><td class="when">February</td><td>Festival de Jerez — flamenco's working season rather than its show season</td></tr>
+        <tr><td class="when">April–September</td><td>Horseback shrimp fishing — around 40 outings a year, each tied to low tide</td></tr>
+        <tr><td class="when">Late June</td><td>Shrimp Festival, Oostduinkerke — final weekend</td></tr>
+        <tr><td class="when">July–August</td><td>Working alps in Switzerland — the milking and cheesemaking half of the season</td></tr>
+        <tr><td class="when">Late August</td><td>Vilafranca del Penedès festival — the strongest castells of the year</td></tr>
+        <tr><td class="when">September–early October</td><td>The Swiss descent from the alps — announced late, weather-dependent</td></tr>
+        <tr><td class="when">Late October</td><td>Santa Úrsula, Valls — the castells origin town's own day</td></tr>
+        <tr><td class="when">Autumn–spring</td><td>Lambic brewing season in the Pajottenland — spontaneous fermentation needs cool air</td></tr>
+        <tr><td class="when">Winter</td><td>Smoke sauna with an ice dip — the full cycle rather than the warm-weather version</td></tr>
+        <tr><td class="when">Multi-year cycles</td><td>Baltic song festivals and the Tarragona castells competition — check the specific year</td></tr>
+        <tr><td class="when">Year-round</td><td>Silbo Gomero, Cremona workshops, Neapolitan pizzerias, Finnish saunas, fado houses</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="politics">
+  <div class="wrap">
+    <h2>The list is not neutral</h2>
+    <p>Three things are worth carrying with you, because they shape what you'll see and what people will tell you about it.</p>
+
+    <div class="note">
+      <h3>Inscription can be reversed</h3>
+      <p class="small"><a href="https://ich.unesco.org/en/RL/aalst-carnival-00402">The Aalst carnival in Belgium was inscribed in 2010 and removed from the Representative List in 2019</a> — the first removal in the convention's history, following antisemitic imagery in the parade. <a href="https://www.unesco.org/en/articles/intangible-cultural-heritage-unesco-inscribes-47-elements">In 2022 the committee unanimously withdrew the Ducasse d'Ath from the multinational Processional Giants and Dragons element, again over the content of the procession.</a> Both towns continued their carnivals regardless, which is the useful part: the list describes a practice, it does not control one. Inscription is a judgement that can be withdrawn, and communities do not necessarily care.</p>
+    </div>
+
+    <div class="note">
+      <h3>National inventories are not the international list</h3>
+      <p class="small">Every state party maintains its own domestic register, and entries there are routinely reported as "UNESCO heritage" by tourist boards and travel press. Viennese coffee house culture is the most-repeated example. Before you repeat a claim, establish which register is meant.</p>
+    </div>
+
+    <div class="note">
+      <h3>Shared traditions become contested ones</h3>
+      <p class="small">Borscht is the loud case, but the pattern is general: coffee, flatbread, polyphonic singing and carnival forms all cross borders that states would rather they didn't. UNESCO's own position is that inscription confers no ownership. Nobody involved behaves as though that settles it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="verify">
+  <div class="wrap">
+    <h2>Checking a claim in ninety seconds</h2>
+    <p>Every inscribed element has a page on ich.unesco.org with a stable numeric identifier, the year, the committee session that decided it (written as 4.COM, 11.COM and so on), the nomination file, and the committee's reasoning. If a claim can't be matched to one of those pages, it is either a national inventory entry, a tentative nomination, or marketing.</p>
+    <p>Two further checks are worth building into any write-up. First, the register: Representative List and Urgent Safeguarding mean quite different things about a tradition's health, and conflating them flatters some communities while ignoring others. Second, the decision text itself — the committee publishes its criteria findings, and those documents are frequently more candid about a practice's fragility, its commercialisation, or its contested ownership than anything the relevant tourist board will tell you.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Sixteen elements from the UNESCO intangible cultural heritage lists, selected for geographic spread and for whether a visitor can genuinely encounter them. Inscription years and committee decisions are drawn from UNESCO records; visiting details from the relevant museums, municipalities and regional tourism authorities, and subject to change. Festival dates tied to Lent, tide tables or weather move every year — confirm locally before booking.</p>
+  </div>
+</footer>
+
+</body>
+</html>
